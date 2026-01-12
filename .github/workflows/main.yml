@@ -1,4 +1,4 @@
-name: Build ARMv7 liblove
+name: Build armeabi-v7a libs
 
 on:
   workflow_dispatch:
@@ -8,13 +8,11 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # 1. Checkout repo with submodules
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
-          submodules: true
+          submodules: true 
 
-      # 2. Download and setup Android NDK r27d
       - name: Download and setup Android NDK r27d
         run: |
           wget https://dl.google.com/android/repository/android-ndk-r27d-linux.zip -O ndk.zip
@@ -22,19 +20,16 @@ jobs:
           export ANDROID_NDK_ROOT=$PWD/android-ndk-r27d
           echo "$ANDROID_NDK_ROOT" >> $GITHUB_PATH
 
-      # 3. Build armeabi-v7a
       - name: Build with ndk-build
         run: |
           cd love/src/jni
           ndk-build APP_ABI=armeabi-v7a
 
-      # 4. Zip the output folder
-      - name: Zip libs/armeabi-v7a
+      - name: blah
         run: |
           cd love/src/libs
           zip -r armeabi-v7a.zip armeabi-v7a
 
-      # 5. Upload the zip as a workflow artifact
       - name: Upload artifact
         uses: actions/upload-artifact@v3
         with:
