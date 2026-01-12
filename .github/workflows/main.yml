@@ -8,30 +8,29 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-        with:
-          submodules: true 
+    - name: Checkout repo
+      uses: actions/checkout@v3
+      with:
+        submodules: recursive
 
-      - name: Download and setup Android NDK r27d
-        run: |
-          wget https://dl.google.com/android/repository/android-ndk-r27d-linux.zip -O ndk.zip
-          unzip ndk.zip
-          export ANDROID_NDK_ROOT=$PWD/android-ndk-r27d
-          echo "$ANDROID_NDK_ROOT" >> $GITHUB_PATH
+    - name: Download and setup Android NDK r26d
+      run: |
+        wget https://dl.google.com/android/repository/android-ndk-r26d-linux.zip
+        unzip android-ndk-r26d-linux.zip
+        echo "$PWD/android-ndk-r26d" >> $GITHUB_PATH
 
-      - name: Build with ndk-build
-        run: |
-          cd love/src/jni
-          ndk-build APP_ABI=armeabi-v7a
+    - name: Build armeabi-v7a
+      run: |
+        cd love/src/jni
+        ndk-build APP_ABI=armeabi-v7a
 
-      - name: blah
-        run: |
-          cd love/src/libs
-          zip -r armeabi-v7a.zip armeabi-v7a
+    - name: Zip output
+      run: |
+        cd love/src/libs
+        zip -r armeabi-v7a.zip armeabi-v7a
 
-      - name: Upload artifact
-        uses: actions/upload-artifact@v6.0.0
-        with:
-          name: armeabi-v7a-libs
-          path: love/src/libs/armeabi-v7a.zip
+    - name: Upload artifact
+      uses: actions/upload-artifact@latest
+      with:
+        name: armeabi-v7a-libs
+        path: love/src/libs/armeabi-v7a.zip
