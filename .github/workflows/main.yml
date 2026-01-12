@@ -23,14 +23,8 @@ jobs:
       run: |
         cd love/src/jni
         ndk-build APP_ABI=armeabi-v7a
-
-    - name: Zip output (flatten)
-      run: |
-        cd love/src/libs/armeabi-v7a
-        zip -r ../../armeabi-v7a.zip ./*
-
     - name: Upload artifact
       uses: actions/upload-artifact@v6.0.0
       with:
         name: armeabi-v7a.zip
-        path: love/src/libs/armeabi-v7a.zip
+        path: love/src/libs/armeabi-v7a
