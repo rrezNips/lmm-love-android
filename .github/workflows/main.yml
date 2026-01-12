@@ -31,7 +31,7 @@ jobs:
           zip -r armeabi-v7a.zip armeabi-v7a
 
       - name: Upload artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@latest
         with:
           name: armeabi-v7a-libs
           path: love/src/libs/armeabi-v7a.zip
